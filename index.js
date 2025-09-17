@@ -55,7 +55,7 @@ async function startBot() {
             if (shouldReconnect) startBot();
         } else if (connection === 'open') {
             console.log('Бот готов!');
-            console.log('Отправка запланирована на 7:30');
+            console.log('Отправка запланирована на 7:30!');
 
             schedule.scheduleJob({ rule: "30 07 * * *", tz: "Asia/Yekaterinburg" }, async () => {
                 const chatId = "79128862212-1503840727@g.us"; // ID чата Молодёжки в WA
