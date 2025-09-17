@@ -1,4 +1,4 @@
-const { Client } = require("whatsapp-web.js");
+const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const schedule = require("node-schedule");
 const dayjs = require('dayjs')
@@ -7,7 +7,22 @@ require('dayjs/locale/ru')
 dayjs.locale('ru');
 
 // Создаём клиента
-const client = new Client();
+const client = new Client({
+    authStrategy: new LocalAuth(),
+    puppeteer: {
+        headless: true,
+        args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-accelerated-2d-canvas",
+            "--no-first-run",
+            "--no-zygote",
+            "--single-process", // иногда помогает
+            "--disable-gpu"
+        ]
+    }
+});
 
 // Выводим QR-код в консоль для авторизации
 client.on("qr", qr => {
@@ -51,7 +66,7 @@ client.on("ready", async () => {
     const dailyMeditation = await getDailyMeditation();
 
     // Запускаем задачу каждый день в 10:00
-    schedule.scheduleJob("30 16 * * *", () => {
+    schedule.scheduleJob("45 16 * * *", () => {
         const chatId = "120363420861533061@g.us"; // ID группы
         // 79128862212-1503840727@g.us
         client.sendMessage(chatId, 'Тест');
