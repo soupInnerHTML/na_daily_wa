@@ -55,14 +55,36 @@ async function startBot() {
             if (shouldReconnect) startBot();
         } else if (connection === 'open') {
             console.log('Бот готов!');
-            console.log('Отправка запланирована на 7:30!');
 
-            schedule.scheduleJob({ rule: "30 07 * * *", tz: "Asia/Yekaterinburg" }, async () => {
-                const chatId = "79128862212-1503840727@g.us"; // ID чата Молодёжки в WA
-                // 120363420861533061@g.us - Для теста
+            const molodezhkaChatId = "79128862212-1503840727@g.us"; // ID чата Молодёжки в WA
+            // 120363420861533061@g.us - Для теста
+
+            const molodezhkaText = 'Группа МОЛОДЁЖКА\n' +
+                'Адрес: ул. Пушкина 13\n' +
+                'Вход со стороны сквера Пушкина\n' +
+                'Время: 21:00 - 22:15\n' +
+                'Ежедневник и Вкусный чай\n' +
+                'Незабываемая атмосфера при свечах\n' +
+                'Ты нужен NAм!\n' +
+                'Для координации:\n' +
+                'Артём +7(912) 984-37-77'
+
+            schedule.scheduleJob({ rule: "00 08 * * *", tz: "Asia/Yekaterinburg" }, async () => {
                 const dailyMeditation = await getDailyMeditation();
                 console.log(dailyMeditation);
-                await sock.sendMessage(chatId, { text: dailyMeditation });
+                await sock.sendMessage(molodezhkaChatId, { text: dailyMeditation });
+            });
+
+            schedule.scheduleJob({ rule: '00 12 * * 1,3,5,6,0', tz: 'Asia/Yekaterinburg' }, async () => {
+                await sock.sendMessage(molodezhkaChatId, {
+                    caption: molodezhkaText,
+                    image: {url: "https://i.ibb.co/tp08X77B/2025-09-17-20-06-43.jpg"}
+                });
+            });
+
+            schedule.scheduleJob({ rule: '00 00 * * 1,3,5,6,0', tz: 'Asia/Yekaterinburg' }, async () => {
+                const chatId = '79519388508@s.whatsapp.net'
+                await sock.sendMessage(chatId, { text: molodezhkaText });
             });
         }
     });
