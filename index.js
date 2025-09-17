@@ -50,8 +50,7 @@ client.on("ready", async () => {
 
     const dailyMeditation = await getDailyMeditation();
 
-    // Запускаем задачу каждый день в 10:00
-    schedule.scheduleJob({rule: "55 16 * * *", tz: "Asia/Yekaterinburg"}, () => {
+    schedule.scheduleJob({rule: "15 17 * * *", tz: "Asia/Yekaterinburg"}, () => {
         const chatId = "120363420861533061@g.us"; // ID группы
         // 79128862212-1503840727@g.us
         client.sendMessage(chatId, 'Тест');
