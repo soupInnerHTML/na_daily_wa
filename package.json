@@ -5,15 +5,17 @@
   "scripts": {
     "start": "node index.js"
   },
-  "type": "module",
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@whiskeysockets/baileys": "^7.0.0-rc.3",
+    "@whiskeysockets/baileys": "6.7.17",
     "dayjs": "^1.11.18",
+    "dotenv": "^17.2.2",
     "node-schedule": "^2.1.1",
     "pino": "^9.9.5",
-    "qrcode-terminal": "^0.12.0"
+    "qrcode-terminal": "^0.12.0",
+    "redis-baileys": "^1.0.1",
+    "uuid": "8.2.0"
   }
 }
